@@ -22,3 +22,23 @@
     -fx-font-weight: bold;
 
 }
+
+.account_view_container TextField {
+    -fx-pref-width: 230;
+    -fx-pref-height: 35;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3,0,0,3);
+}
+
+.account_view_container Button {
+    -fx-pref-width: 230;
+    -fx-background-color: linear-gradient(to right, #132A13, #253F25);
+    -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3,0,0,3);
+    -fx-font-size: 1.5em;
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: "#FFFFFF";
+}
+
+.account_view_container Button:hover {
+    -fx-cursor: hand;
+}
