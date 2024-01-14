@@ -1,6 +1,7 @@
 package com.gmb.inventory.controllers.client;
 
 import com.gmb.inventory.models.Model;
+import com.gmb.inventory.views.ClientMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -26,12 +27,12 @@ public class ClientMenuController implements Initializable {
         accounts_btn.setOnAction(actionEvent -> onAccounts());
     }
     private void onDashboard() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Dashboard");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.DASHBOARD);
     }
     private void onTransactions() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Transactions");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.TRANSACTIONS);
     }
     private void onAccounts() {
-        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set("Accounts");
+        Model.getInstance().getViewFactory().getClientSelectedMenuItem().set(ClientMenuOptions.ACCOUNTS);
     }
 }
