@@ -6,6 +6,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,6 +25,10 @@ public class ViewFactory {
     //Admin Views
     private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
     private AnchorPane createClientView;
+
+    private AnchorPane depositView;
+
+    private AnchorPane clientsView;
 
     public ViewFactory(){
         this.loginAccountType = AccountType.CLIENT;
@@ -55,6 +60,17 @@ public class ViewFactory {
             }
         }
         return accountsView;
+    }
+
+    public AnchorPane getClientsView() {
+        if(clientsView == null) {
+            try {
+                clientsView = new FXMLLoader(getClass().getResource("/fxml/admin/Clients.fxml")).load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return clientsView;
     }
 
     public AnchorPane getDashboardView() {
@@ -103,6 +119,18 @@ public class ViewFactory {
         return createClientView;
     }
 
+    public AnchorPane getDepositView() {
+        if(depositView == null) {
+            try{
+                depositView = new FXMLLoader(getClass().getResource("/fxml/admin/Deposits.fxml")).load();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return depositView;
+    }
+
 
     private void createStage(FXMLLoader loader) {
         Scene scene = null;
@@ -113,6 +141,8 @@ public class ViewFactory {
         }
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/images/icon.png"))));
+        stage.setResizable(false);
         stage.setTitle("Accounts");
         stage.show();
     }

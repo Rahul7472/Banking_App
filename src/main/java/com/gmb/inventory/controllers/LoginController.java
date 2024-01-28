@@ -28,16 +28,43 @@ public class LoginController implements Initializable {
         acc_selector.setValue(Model.getInstance().getViewFactory().getLoginAccountType());
         acc_selector.valueProperty().addListener(observable -> Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue()));
         login_btn.setOnAction(event -> onLogin());
+        acc_selector.valueProperty().addListener(observable -> setAccountSelector());
     }
 
     private void onLogin(){
         Stage stage = (Stage)error_lbl.getScene().getWindow();
-        Model.getInstance().getViewFactory().closeStage(stage);
         if(Model.getInstance().getViewFactory().getLoginAccountType() == AccountType.CLIENT) {
-            Model.getInstance().getViewFactory().showClientWindow();
+            //Evaluate login credentials
+            Model.getInstance().evaluateClientCred(email_address_field.getText(),password_field.getText());
+            if(Model.getInstance().isClientLoginSuccessFlag()) {
+                Model.getInstance().getViewFactory().showClientWindow();
+                Model.getInstance().getViewFactory().closeStage(stage);
+            } else {
+                email_address_field.setText("");
+                password_field.setText("");
+                error_lbl.setText("No Such Login Credentials.");
+            }
         } else {
-            Model.getInstance().getViewFactory().showAdminWindow();
-        }
+            // Evaluate admin login credentials
+            Model.getInstance().evaluateAdminCred(email_address_field.getText(),password_field.getText());
+            if(Model.getInstance().getAdminLoginSuccessFlag()) {
+                Model.getInstance().getViewFactory().showAdminWindow();
+                Model.getInstance().getViewFactory().closeStage(stage);
+            } else {
+                email_address_field.setText("");
+                password_field.setText("");
+                error_lbl.setText("No Such Login Credentials.");
+            }
 
+        }
+    }
+
+    private void setAccountSelector() {
+        Model.getInstance().getViewFactory().setLoginAccountType(acc_selector.getValue());
+        if(acc_selector.getValue().equals(AccountType.ADMIN)) {
+            email_address_lbl.setText("Username: ");
+        } else {
+            email_address_lbl.setText("Email Address: ");
+        }
     }
 }
